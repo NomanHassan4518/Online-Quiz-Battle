@@ -9,10 +9,11 @@ const Navbar = () => {
           <IoGameController className="text-3xl text-yellow-500" />
           <span className="text-xl font-bold">Online Quiz Battle</span>
         </Link>
+        <p className="text-6xl text-red-800">Noman Hassan</p>
 
         <div className="space-x-4 ">
           <Link
-            to="/login"
+            to="/login" 
             className="hover:text-yellow-500"
           >
             Login
