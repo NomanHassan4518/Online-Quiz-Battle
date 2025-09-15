@@ -5,13 +5,12 @@ import { FaArrowRight } from "react-icons/fa";
 import { io } from "socket.io-client";
 import Spinner from "../components/Spinner";
 
-const socket = io("http://localhost:5000"); // Backend Socket.io URL
+const socket = io("http://localhost:5000"); 
 
 const QuizPage = () => {
   const { categoryId } = useParams();
   const navigate = useNavigate();
 
-  // --- State ---
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -22,10 +21,9 @@ const QuizPage = () => {
   const [players, setPlayers] = useState([]);
   const [quizStarted, setQuizStarted] = useState(false);
 
-  const user = JSON.parse(localStorage.getItem("user"))
-  const username = user.name
+  const user = JSON.parse(localStorage.getItem("user"));
+  const username = user.name;
 
-  // --- Fetch Questions ---
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -42,7 +40,6 @@ const QuizPage = () => {
     fetchQuestions();
   }, [categoryId]);
 
-  // --- Socket.io: Join Room & Multiplayer Logic ---
   useEffect(() => {
     socket.emit("joinRoom", { roomId: categoryId, username });
 
@@ -73,7 +70,7 @@ const QuizPage = () => {
       if (showResult) {
         try {
           await axios.post("http://localhost:5000/api/leaderboard", {
-            userId:user.id,
+            userId: user.id,
             username,
             score,
           });
@@ -102,7 +99,6 @@ const QuizPage = () => {
 
   const currentQuestion = questions[currentIndex];
 
-  // --- Handle Option Click ---
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     const isCorrect = option === currentQuestion.answer;
@@ -129,7 +125,6 @@ const QuizPage = () => {
     }
   };
 
-  // --- Restart Quiz / Back to Lobby ---
   const handleRestart = () => {
     setCurrentIndex(0);
     setScore(0);
@@ -140,32 +135,11 @@ const QuizPage = () => {
     navigate("/quiz-lobby");
   };
 
-  // --- Render Quiz Result ---
   if (showResult)
     return (
       <div className="min-h-[calc(100vh-70px)] flex flex-col items-center justify-center px-6">
         <h2 className="text-3xl font-bold mb-4">Quiz Completed!</h2>
         <p className="text-xl mb-6">Your Score: {score}</p>
-
-        <h3 className="text-2xl font-semibold mb-2">Players Scores:</h3>
-        <div className="overflow-x-auto mb-6">
-          <table className="table-auto border-collapse border border-gray-300 text-left">
-            <thead>
-              <tr>
-                <th className="border px-4 py-2">Player</th>
-                <th className="border px-4 py-2">Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {players.map((p) => (
-                <tr key={p.id}>
-                  <td className="border px-4 py-2">{p.username}</td>
-                  <td className="border px-4 py-2">{p.score}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
 
         <button
           onClick={handleRestart}
@@ -176,11 +150,9 @@ const QuizPage = () => {
       </div>
     );
 
-  // --- Render Quiz Question ---
   return (
     <div className="min-h-[calc(100vh-70px)] bg-gray-50 px-6 py-10">
       <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md">
-        {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[#0b2b4a]">
             Question {currentIndex + 1} of {questions.length}
@@ -188,12 +160,10 @@ const QuizPage = () => {
           <span className="text-gray-600 font-semibold">Time: {timer}s</span>
         </div>
 
-        {/* Question Text */}
         <h3 className="text-xl md:text-2xl font-semibold mb-6">
           {currentQuestion.question}
         </h3>
 
-        {/* Options */}
         <div className="grid grid-cols-1 gap-4">
           {currentQuestion.options.map((option, idx) => {
             let bgClass = "bg-gray-100 hover:bg-gray-200";
@@ -227,7 +197,6 @@ const QuizPage = () => {
           })}
         </div>
 
-        {/* Next Button */}
         <div className="flex justify-end mt-6">
           <button
             onClick={handleNext}

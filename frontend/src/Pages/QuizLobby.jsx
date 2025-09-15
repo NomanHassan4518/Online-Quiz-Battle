@@ -15,7 +15,6 @@ const QuizLobby = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Icon and color mapping
   const categoryMeta = {
     "Artificial Intelligence": {
       icon: <FaRobot className="text-4xl text-blue-600" />,
@@ -43,7 +42,6 @@ const QuizLobby = () => {
     },
   };
 
-  // Fetch categories from backend
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -96,7 +94,7 @@ const QuizLobby = () => {
                 onClick={() => handleJoin(category)}
               >
                 <div className="mb-4 flex justify-center">
-                  {meta.icon || "📚"}
+                  {meta.icon}
                 </div>
                 <h2 className="text-xl font-semibold text-gray-800">
                   {category.name}

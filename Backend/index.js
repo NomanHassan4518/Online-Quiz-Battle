@@ -30,8 +30,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 
-// --- Socket.io Logic ---
-const rooms = {}; // roomId => { players: [{ id, username, score }] }
+const rooms = {}; 
 
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
@@ -62,7 +61,7 @@ io.on("connection", (socket) => {
     const player = room.players.find((p) => p.id === socket.id);
     if (!player) return;
 
-    if (isCorrect) player.score += 10; // add points
+    if (isCorrect) player.score += 10; 
 
     io.to(roomId).emit("playerAnswered", {
       playerId: socket.id,

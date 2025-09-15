@@ -17,8 +17,6 @@ const Home = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         overlay: "#0000",
-
-        // backgroundPosition: "center",
       }}
       className="flex flex-col items-center justify-center"
     >

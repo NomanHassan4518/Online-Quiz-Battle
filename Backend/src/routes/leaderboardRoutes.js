@@ -13,21 +13,17 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "userId, username, and score are required" });
     }
 
-    // Check if user exists in DB
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Check if leaderboard entry exists
     let entry = await Leaderboard.findOne({ userId });
 
     if (entry) {
-      // Add score to totalScore
       entry.totalScore += score;
       await entry.save();
     } else {
-      // Create new entry
       entry = new Leaderboard({ userId, username, totalScore: score });
       await entry.save();
     }
