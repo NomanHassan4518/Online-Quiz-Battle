@@ -11,16 +11,20 @@ const Register = () => {
     password: "",
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user) {
+    navigate("/quiz-lobby");
+  }
 
   const [loading, setLoading] = useState(false);
 
-  // handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -39,8 +43,8 @@ const Register = () => {
       if (res.ok) {
         toast.success(data.message);
         setFormData({ name: "", email: "", password: "" });
-        navigate("/")
-        localStorage.setItem("user",data.token)
+        navigate("/quiz-lobby");
+        localStorage.setItem("user", JSON.stringify(data));
       } else {
         toast.error(data.message || "Registration failed!");
       }

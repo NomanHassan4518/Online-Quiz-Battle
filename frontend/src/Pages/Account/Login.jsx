@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Spinner from "../../Components/Spinner"; 
+import Spinner from "../../Components/Spinner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +10,12 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user) {
+    navigate("/quiz-lobby");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,10 +38,10 @@ const Login = () => {
       setLoading(false);
 
       if (res.ok) {
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data));
 
         toast.success(data.message);
-        navigate("/"); // redirect to home
+        navigate("/quiz-lobby");
       } else {
         toast.error(data.message || "Login failed");
       }

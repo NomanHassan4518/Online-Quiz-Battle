@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user) {
+    navigate("/quiz-lobby");
+  }
   return (
     <div
       style={{
@@ -9,8 +16,8 @@ const Home = () => {
         height: "calc(100vh - 70px)", // navbar height subtracted
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        overlay:"#0000",
-        
+        overlay: "#0000",
+
         // backgroundPosition: "center",
       }}
       className="flex flex-col items-center justify-center"
@@ -19,7 +26,6 @@ const Home = () => {
         <h1 className="text-[#001a4e] font-extrabold text-4xl md:text-5xl leading-tight">
           Welcome to Online Quiz Battle
         </h1>
-        
 
         <div className="flex text-start items-center justify-center mt-4 text-gray-800 text-base md:text-lg leading-relaxed">
           <ul className="list-disc list-inside space-y-2">
