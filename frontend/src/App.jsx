@@ -7,6 +7,9 @@ import Register from "./Pages/Account/Register";
 import Login from "./Pages/Account/Login";
 import QuizLobby from "./Pages/QuizLobby";
 import { useEffect } from "react";
+import QuizPage from "./Pages/QuizPage";
+import WaitingRoom from "./Pages/WaitingRoom";
+import Leaderboard from "./Pages/Leaderboard";
 
 function App() {
   const navigate = useNavigate();
@@ -16,7 +19,7 @@ function App() {
     if (user) {
       navigate("/quiz-lobby");
     }
-  });
+  },[]);
   return (
     <>
       <Navbar />
@@ -25,6 +28,9 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/quiz-lobby" element={<QuizLobby />}></Route>
+        <Route path="/waiting/:roomId" element={<WaitingRoom />}></Route>
+        <Route path="/quiz/:categoryId" element={<QuizPage />}></Route>
+        <Route path="/leaderboard" element={<Leaderboard />}></Route>
       </Routes>
 
       <ToastContainer position="top-right" autoClose={3000} />
